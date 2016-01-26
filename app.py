@@ -2,19 +2,24 @@ import smtp
 import objdump
 import datetime
 import schedule
+from time import sleep
 from hut import Hut
 
 HUT = None
-COOKIE_FILE = None
 CRAWLER_SMTP = None
 MEMBER_INFO = None
 
 
+def member_info_update():
+    global MEMBER_INFO
+    MEMBER_INFO = HUT.member_info()
+    print('Updated member info:', objdump.get(MEMBER_INFO))
+
+
 def main(myhut_info, smtp_info, plan):
-    global HUT, COOKIE_FILE, CRAWLER_SMTP, MEMBER_INFO
+    global HUT, CRAWLER_SMTP
 
     HUT = Hut(myhut_info['username'], myhut_info['password'])
-    COOKIE_FILE = HUT.email + '.session'
     CRAWLER_SMTP = smtp.Server(
         smtp_info['server'],
         smtp_info['port'],
@@ -24,13 +29,19 @@ def main(myhut_info, smtp_info, plan):
         smtp_info['email'])
 
     HUT.login()
-    MEMBER_INFO = HUT.member_info()
-    t = datetime.time(18, 30, 0, 0, HUT.timezone)
-    zumba = HUT.get_class(MEMBER_INFO['club_id'], 'LESMILLS CXWORX', t, t)
+    schedule.every().day.at('20:44').do(member_info_update)
+
+    while True:
+        schedule.run_pending()
+        sleep(1)
+
+    # member_info_update()
+
+    # t = datetime.time(18, 30, 0, 0, HUT.timezone)
+    # zumba = HUT.get_class(MEMBER_INFO['club_id'], 'LESMILLS CXWORX', t, t)
 
     # hut.book_class(zumba['class_id'], member_info['member_id'])
-    objdump.stdout(MEMBER_INFO)
-    objdump.stdout(zumba)
+
 
 
 if __name__ == '__main__':
@@ -67,5 +78,5 @@ if __name__ == '__main__':
     try:
         main(myhut_info, smtp_info, plan)
     except Exception as e:
-        raise
         sys.exit('error: ' + str(e))
+        raise
