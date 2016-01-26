@@ -1,0 +1,6 @@
+cssselect==0.9.1
+lxml==3.5.0
+pytz==2015.7
+requests==2.9.1
+schedule==0.3.2
+wheel==0.26.0
