@@ -31,6 +31,10 @@ def sub(date, *args, **kwargs):
     return date - timedelta(*args, **kwargs)
 
 
+def add(date, *args, **kwargs):
+    return date + timedelta(*args, **kwargs)
+
+
 def dup(date):
     return date.replace()
 

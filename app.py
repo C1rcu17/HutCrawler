@@ -41,7 +41,7 @@ def main(myhut_info, smtp_info, plan):
 
     SCHEDULER = BlockingScheduler()
     SCHEDULER.add_job(member_info_update, trigger='cron', hour=0, minute=0)
-    SCHEDULER.add_job(SCHEDULER.print_jobs, trigger='interval', seconds=10)
+    SCHEDULER.add_job(print_jobs, trigger='interval', hours=1)
 
     for job in plan:
         start_date = dates.parse(job['time'], TIME_FORMAT)
@@ -55,6 +55,9 @@ def main(myhut_info, smtp_info, plan):
             day_of_week=job['day_of_week'], hour=book_date.hour, minute=book_date.minute)
 
     SCHEDULER.start()
+
+def print_jobs():
+    SCHEDULER.print_jobs()
 
 
 def book_class(job):
