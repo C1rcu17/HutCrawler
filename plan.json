@@ -14,13 +14,13 @@
   "plan": [{
       "club": "Braga",
       "class": "LESMILLS CXWORX",
-      "day": "Tuesday",
-      "time": "18:30"
+      "day_of_week": "tue",
+      "time": "8:30"
     },{
       "club": "Braga",
-      "class": "LESMILLS BODYSTEP",
-      "day": "Wdnesday",
-      "time": "20:15"
+      "class": "LESMILLS BODYATTACK",
+      "day_of_week": "thu",
+      "time": "19:30"
     }
   ]
 }

@@ -4,6 +4,7 @@ from pprint import pformat
 
 
 class PrettyPrinter(json.JSONEncoder):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.skipkeys = True
@@ -13,10 +14,8 @@ class PrettyPrinter(json.JSONEncoder):
         self.sort_keys = True
 
     def default(self, obj):
-        print(type(obj), obj.__dict__)
-
         def dictfilter(d):
-            return {k: v for k, v, in d.items() if True or not isinstance(k, str) or not k.startswith('_')}
+            return {k: v for k, v, in d.items() if not isinstance(k, str) or not k.startswith('_')}
 
         if isinstance(obj, Mapping):
             return dictfilter(dict(obj))

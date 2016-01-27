@@ -1,6 +1,5 @@
+import dates
 from www import Browser
-from datetime import datetime
-from pytz import timezone
 
 
 class HutException(Exception):
@@ -8,16 +7,16 @@ class HutException(Exception):
 
 
 class Hut(Browser):
+
     def __init__(self, email, password):
         super().__init__()
         self.email = email
         self.password = password
-        self.timezone = timezone('Europe/Lisbon')
         self.session.headers.update({
             'Host': 'www.myhut.pt'
         })
 
-    def login(self):
+    def do_login(self):
         url = 'https://www.myhut.pt/myhut/functions/login.php'
 
         headers = {
@@ -37,7 +36,7 @@ class Hut(Browser):
         if response.text == '  -1':
             raise HutException('invalid login')
 
-    def member_info(self):
+    def get_member_info(self):
         info = {}
 
         url = 'https://www.myhut.pt/myhut/aulas/'
@@ -81,7 +80,7 @@ class Hut(Browser):
 
         get_data = {
             'id': club_id,
-            'date': datetime.now(self.timezone).strftime('%Y-%m-%d'),
+            'date': dates.f(dates.now(), '%Y-%m-%d'),
             'rnd': '1453419300746'
         }
 
@@ -104,7 +103,7 @@ class Hut(Browser):
             info['class_id'] = c.get('href')[len('#aula'):]
 
             divs = c.xpath('./div')
-            info['time'] = datetime.strptime(divs[0].xpath('.//span')[0].text.strip(), '%H:%M').time()
+            info['time'] = dates.parse(divs[0].xpath('.//span')[0].text.strip(), '%H:%M')
             info['class_name'] = divs[1].xpath('.//span')[0].text.strip()
             info['studio'] = divs[2].text.strip()
             info['duration'] = divs[3].text.strip()
