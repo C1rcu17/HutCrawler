@@ -87,7 +87,7 @@ def book_class(job):
             break
 
     CRAWLER_SMTP.send_email(HUT.email, 'Marcação de aula no Fitness Hut',
-        'Marquei uma aula de {} de {} no {} do clube de {} que começa hoje, às {}.\n\nAproveita, e Bom Treino\n\t{}'.format(
+        'Bom dia :D\n\n\tMarquei uma aula de {} de {} no {} do clube de {} que começa hoje, às {}.\n\nAproveita, e bom treino\n\t{}'.format(
             c['class_name'], c['duration'], c['studio'], job['club'], job['time'], CRAWLER_SMTP.name
         ))
 
