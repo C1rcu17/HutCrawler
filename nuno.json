@@ -1,0 +1,21 @@
+{
+  "myhut": {
+    "username": "eu.nuno@gmail.com",
+    "password": "<password>"
+  },
+  "smtp": {
+    "server": "smtp.gmail.com",
+    "port": 465,
+    "username": "phjter@gmail.com",
+    "password": "<password>",
+    "name": "Hut Crawler",
+    "email": "phjter@gmail.com"
+  },
+  "plan": [{
+      "club": "Braga",
+      "class": "LESMILLS BODYATTACK",
+      "day_of_week": "thu",
+      "time": "19:30"
+    }
+  ]
+}

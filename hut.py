@@ -132,7 +132,7 @@ class Hut(Browser):
             'op': 'book-aulas',
         }
 
-        response, _, _ = self.url_dump('POST', url, dump_file='book.html', headers=headers, data=post_data)
+        response, _, _ = self.url_etree('POST', url, headers=headers, data=post_data)
 
         if response.text != '  1':
             raise HutException('couldn\'t book class')

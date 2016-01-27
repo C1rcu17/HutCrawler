@@ -3,6 +3,9 @@
 HOME="$(dirname "$(readlink -e "${0}")")"
 . "${HOME}/common.sh"
 
+apt_require build-essential
+apt_require python3-dev
+apt_require python-virtualenv
 apt_require libxml2-dev
 apt_require libxslt1-dev
 apt_require zlib1g-dev

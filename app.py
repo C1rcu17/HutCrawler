@@ -30,14 +30,14 @@ def main(myhut_info, smtp_info, plan):
     HUT.do_login()
     member_info_update()
 
-    job = {
-      "club": "Braga",
-      "class": "V-CLASS CYCLING",
-      "day_of_week": "wed",
-      "time": "10:30"
-    }
-    book_class(job)
-    return
+    # job = {
+    #   "club": "Braga",
+    #   "class": "V-CLASS CYCLING",
+    #   "day_of_week": "wed",
+    #   "time": "10:30"
+    # }
+    # book_class(job)
+    # return
 
     SCHEDULER = BlockingScheduler()
     SCHEDULER.add_job(member_info_update, trigger='cron', hour=0, minute=0)
