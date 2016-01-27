@@ -41,7 +41,7 @@ def main(myhut_info, smtp_info, plan):
 
     SCHEDULER = BlockingScheduler()
     SCHEDULER.add_job(member_info_update, trigger='cron', hour=0, minute=0)
-    # SCHEDULER.add_job(SCHEDULER.print_jobs, trigger='interval', seconds=10)
+    SCHEDULER.add_job(SCHEDULER.print_jobs, trigger='interval', seconds=10)
 
     for job in plan:
         start_date = dates.parse(job['time'], TIME_FORMAT)
@@ -54,7 +54,6 @@ def main(myhut_info, smtp_info, plan):
             book_class, args=[job], trigger='cron',
             day_of_week=job['day_of_week'], hour=book_date.hour, minute=book_date.minute)
 
-    SCHEDULER.print_jobs()
     SCHEDULER.start()
 
 
@@ -66,23 +65,27 @@ def book_class(job):
 
     # Wait for available
     while True:
-        c = HUT.get_class(MEMBER_INFO['clubs'][job['club']], job['class'], time, time)
-        if c:
-            objdump.stdout(c)
-            break
-        else:
+        try:
+            c = HUT.get_class(MEMBER_INFO['clubs'][job['club']], job['class'], time, time)
+            if not c:
+                raise Exception('no class found')
+        except Exception as e:
+            print(str(e))
             print('waiting 10 seconds before retry check')
             sleep(10)
+        else:
+            break
+
+    objdump.stdout(c)
 
     while True:
-        HUT.do_login()
         try:
+            HUT.do_login()
             HUT.book_class(c['class_id'], MEMBER_INFO['member_id'])
         except Exception as e:
             print(str(e))
             print('waiting 5 seconds before retry book')
             sleep(5)
-            pass
         else:
             break
 

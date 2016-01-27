@@ -13,6 +13,11 @@
   },
   "plan": [{
       "club": "Braga",
+      "class": "LESMILLS BODYSTEP",
+      "day_of_week": "wed",
+      "time": "19:25"
+    },{
+      "club": "Braga",
       "class": "LESMILLS BODYATTACK",
       "day_of_week": "thu",
       "time": "19:30"
