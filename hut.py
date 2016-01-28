@@ -80,7 +80,7 @@ class Hut(Browser):
 
         get_data = {
             'id': club_id,
-            'date': dates.f(dates.now() if not tomorrow else dates.now().add(days=1), '%Y-%m-%d'),
+            'date': dates.f(dates.now() if not tomorrow else dates.add(dates.now(), days=1), '%Y-%m-%d'),
             'rnd': '1453419300746'
         }
 

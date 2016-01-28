@@ -27,7 +27,6 @@ def main(myhut_info, smtp_info, plan):
         smtp_info['name'],
         smtp_info['email'])
 
-    HUT.do_login()
     member_info_update()
 
     # job = {
