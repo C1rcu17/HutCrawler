@@ -68,7 +68,7 @@ class Hut(Browser):
 
         return info
 
-    def get_classes(self, club_id):
+    def get_classes(self, club_id, tomorrow=False):
         classes = []
 
         url = 'https://www.myhut.pt/myhut/functions/get-aulas.php'
@@ -80,7 +80,7 @@ class Hut(Browser):
 
         get_data = {
             'id': club_id,
-            'date': dates.f(dates.now(), '%Y-%m-%d'),
+            'date': dates.f(dates.now() if not tomorrow else dates.now().add(days=1), '%Y-%m-%d'),
             'rnd': '1453419300746'
         }
 

@@ -41,7 +41,6 @@ def main(myhut_info, smtp_info, plan):
 
     SCHEDULER = BlockingScheduler()
     SCHEDULER.add_job(member_info_update, trigger='cron', hour=0, minute=0)
-    SCHEDULER.add_job(print_jobs, trigger='interval', hours=1)
 
     for job in plan:
         start_date = dates.parse(job['time'], TIME_FORMAT)
@@ -56,7 +55,18 @@ def main(myhut_info, smtp_info, plan):
 
     SCHEDULER.start()
 
-def print_jobs():
+
+def member_info_update():
+    global MEMBER_INFO
+    HUT.do_login()
+    MEMBER_INFO = HUT.get_member_info()
+    print('Member info:')
+    objdump.stdout(MEMBER_INFO)
+    print('Today classes for {} club:'.format(MEMBER_INFO['club_name']))
+    objdump.stdout(HUT.get_classes(MEMBER_INFO['club_id']))
+    print('Tomorrow classes for {} club:'.format(MEMBER_INFO['club_name']))
+    objdump.stdout(HUT.get_classes(MEMBER_INFO['club_id'], tomorrow=True))
+    print('Jobs:')
     SCHEDULER.print_jobs()
 
 
@@ -97,11 +107,6 @@ def book_class(job):
             c['class_name'], c['duration'], c['studio'], job['club'], job['time'], CRAWLER_SMTP.name
         ))
 
-
-def member_info_update():
-    global MEMBER_INFO
-    MEMBER_INFO = HUT.get_member_info()
-    print('Updated member info:', objdump.get(MEMBER_INFO))
 
 if __name__ == '__main__':
     import sys
