@@ -65,8 +65,9 @@ def member_info_update():
     objdump.stdout(HUT.get_classes(MEMBER_INFO['club_id']))
     print('Tomorrow classes for {} club:'.format(MEMBER_INFO['club_name']))
     objdump.stdout(HUT.get_classes(MEMBER_INFO['club_id'], tomorrow=True))
-    print('Jobs:')
-    SCHEDULER.print_jobs()
+    if SCHEDULER:
+        print('Jobs:')
+        SCHEDULER.print_jobs()
 
 
 def book_class(job):
