@@ -21,6 +21,16 @@
       "class": "LESMILLS BODYATTACK",
       "day_of_week": "thu",
       "time": "19:30"
+    },{
+      "club": "Braga",
+      "class": "LESMILLS BODYCOMBAT",
+      "day_of_week": "fri",
+      "time": "18:30"
+    },{
+      "club": "Braga",
+      "class": "3B",
+      "day_of_week": "fri",
+      "time": "19:35"
     }
   ]
 }
